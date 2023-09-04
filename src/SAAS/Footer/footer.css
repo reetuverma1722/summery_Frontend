@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Mulish:wght@300&family=Ruwudu&display=swap");
+.footer-container-fluid {
+  background-color: #444141;
+  color: white;
+  padding: 20px 40px;
+}
+
+.footer-container-fluid .footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-container-fluid .footer-container .copyright p {
+  font-size: 20px;
+  font-family: "Lora", serif;
+}
+
+.term-services ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+.term-services ul li {
+  cursor: pointer;
+  font-size: 20px;
+  font-family: "IvyMode", sans-serif;
+}
+.term-services ul li:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 700px) {
+  .footer-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .footer-container-fluid .footer-container .copyright p {
+    font-size: 11px;
+    margin-bottom: 5px;
+  }
+  .term-services ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .term-services ul li {
+    cursor: pointer;
+    font-size: 11px;
+    font-family: "IvyMode", sans-serif;
+    list-style: none;
+  }
+}/*# sourceMappingURL=footer.css.map */

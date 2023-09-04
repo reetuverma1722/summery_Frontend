@@ -1,0 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital@0;1&family=Poppins:wght@300;400&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    font-family: 'Josefin Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
+}
+.websiteBBannerWrap {
+    justify-content: center;
+}
+
+.websiteBBannerWrap {
+    flex-wrap: wrap;
+}
+
+.websiteBBannerWrap {
+    display: flex;
+    -ms-display: flex;
+    justify-content: space-between;
+    align-content: center;
+    padding: 80px 0 40px;
+}
+.websiteBBannerWrap {
+    position: relative;
+    padding: 0;
+    display: flex;
+    -ms-display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.bannercontent {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+    text-align: center;
+}
+
+
+.bannercontent {
+    padding: 0 120px;
+}.bannerheading {
+    background: -webkit-linear-gradient(70deg,#1270E5,#933EC4);
+
+    -webkit-text-fill-color: transparent;
+    font-size: 40px;
+}
+
+.bannerheading {
+    font-weight: 700;
+    font-family: proxima-med,sans-serif;
+}
+
+.banner_subheading {
+    font-size: 18px;
+}
+
+h2  {
+    font-size: 30px;
+}
+ h2 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+ h2 {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+}
+.bannercontent {
+    
+    text-align: center;
+}
+#builder-form {
+    position: relative;
+    width: 75%;
+    width: 65%;
+    margin: 20px auto;
+}
+form {
+    display: block;
+    margin-top: 0em;
+}
+
+
+#voicebtn {
+    padding: 6px 10px;
+    font-size: 20px;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    width: 60px;
+    height: 50px;
+    z-index: 1;
+    top: 170px;
+    height: 60px;
+}
+img {
+    max-width: 100%;
+}
+
+img {
+    vertical-align: middle;
+}
+img {
+    border: 0;
+}
+#builder-form textarea {
+    width: 100%;
+    margin: 3rem auto;
+    padding: 1.5rem;
+    background: #fff;
+    position: relative;
+    border: 1px solid #DAE7F7;
+    border-radius: 8px;
+    color: #333;
+    box-shadow: none;
+    height: 220px;
+    font-size: 16px;
+    filter: drop-shadow(0px 0px 8px #E2EDFA);
+    display: block;
+}
+
+textarea {
+    resize: none;
+}
+input, button, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+textarea {
+    overflow: auto;
+}
+
+button#appDesBuild[disabled="disabled"] {
+    background: #7a7a7a;
+    user-select: none;
+    cursor: default;
+}
+
+button.builder-btn {
+    outline: none;
+    border: none;
+    width: auto;
+    color: #fff;
+    padding: 10px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    background: #17A2B8;
+    background-image: none;
+    transition: transform .3s ease;
+    background-image: linear-gradient(70deg,#1270E5,#933EC4);
+    margin: auto;
+    font-size: 18px;
+    border-radius: 30px;
+}
+button[disabled] {
+    cursor: default;
+}
+ button {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+button {
+  
+    cursor: pointer;
+}
+button {
+    text-transform: none;
+}
+button {
+    overflow: visible;
+}
+.bannerheading {
+    background: -webkit-linear-gradient(70deg,#1270E5,#933EC4);
+   
+    -webkit-text-fill-color: transparent;
+    font-size: 40px;
+}
+.bannerheading {
+    font-weight: 700;
+    font-family: proxima-med,sans-serif;
+}
+.custom-select {
+    height: 64px;
+    width: 100%;
+    outline: none;
+    background-color: #fafafa;
+    border-radius: 1.3rem;
+    font-size:15px;
+    font-family: sans-serif;
+    margin-bottom: 60px;
+    font-weight: bold;
+    border-color: #b59fc0;
+    transition: transform .3s ease;
+    border-radius: 30px;
+  }
+  

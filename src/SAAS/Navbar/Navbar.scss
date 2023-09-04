@@ -1,0 +1,81 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora&display=swap");
+
+.navbar-container-fluid {
+  background-color: #444141;
+  width: auto;
+  color: white;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 20px;
+}
+@media screen and (max-width: 950px) {
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 25px;
+  }
+}
+.navbar-logo img {
+  height: 50px;
+  width: 50px;
+}
+
+.navbar-list .navbar-list-items {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+.navbar-list .navbar-list-items .navbar-list-item {
+  font-family: "Lora", serif;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 500px) and (min-width: 400px) {
+  .navbar-logo img {
+    height: 40px;
+    width: 40px;
+  }
+  .navbar-list .navbar-list-items .navbar-list-item {
+    font-family: "Lora", serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 400px) and (min-width: 300px) {
+  .navbar-list .navbar-list-items .navbar-list-item {
+    font-family: "Lora", serif;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 5px;
+  }
+}
+
+@media screen and (max-width:300px) and (min-width:200px) {
+    .navbar-list .navbar-list-items .navbar-list-item {
+        font-family: "Lora", serif;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;     
+}
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 5px;
+  }
+}
