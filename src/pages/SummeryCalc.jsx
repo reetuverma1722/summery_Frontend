@@ -15,6 +15,7 @@ const SummeryCalc = () => {
     const [summeryLength, setSummeryLength] = useState(0);
     const [summery1, setSummery1] = useState();
     const [summeryLength1, setSummeryLength1] = useState(0);
+    const [loading,setLoading] = useState(false);
     
     const {
         transcript,
@@ -30,6 +31,7 @@ const SummeryCalc = () => {
 
     const handleClick = async () => {
         try {
+            setLoading(true)
             const result = await axios.post("https://flask-app2-rg15.onrender.com/send_data",{story})
             console.log(result?.data)
             if(result?.data){
@@ -37,6 +39,8 @@ const SummeryCalc = () => {
             }
         } catch (error) {
             console.log(error)
+        }finally{
+            setLoading(false)
         }
     }
 
@@ -116,13 +120,14 @@ console.log(summery)
                         summery={summery}
                         summeryLength={summeryLength}
                         setSummery={setSummery}
+                        loading={loading}
 
                     />
 
                 </div>
             </div>
             <button type="submit" value="Build Now" className="builder-btn" id="appDesBuild"  
-            onClick={handleClick}>Summarize</button>
+            onClick={handleClick}>{loading ? "Loading....":"Summarize"}</button>
             <br></br>
             <br></br>
 

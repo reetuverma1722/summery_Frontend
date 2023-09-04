@@ -4,7 +4,7 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { toast } from 'react-toastify';
 
-const SummeryComponent = ({ summery, setSummery, summeryLength }) => {
+const SummeryComponent = ({ summery, setSummery, summeryLength,loading }) => {
 
     const {
         transcript,
@@ -43,14 +43,14 @@ const SummeryComponent = ({ summery, setSummery, summeryLength }) => {
         <div className="bar">
             <p>{summeryLength} Words</p>
             <div className='fun'>
-                <Tooltip placement="top" title="Mic" >
+                {/* <Tooltip placement="top" title="Mic" >
                     {!listening ?
                         <span onClick={SpeechRecognition.startListening}>
                             <i className='bx bx-microphone'></i></span> :
                         <span onClick={SpeechRecognition.stopListening}>
                             <i class='bx bx-microphone-off'></i></span>
                     }
-                </Tooltip>
+                </Tooltip> */}
                 <Tooltip placement="top" title="Clipboard" >
                     <CopyToClipboard text={summery}>
                         <span onClick={() => toast.success("Copied")}><i className='bx bx-clipboard'></i></span>
