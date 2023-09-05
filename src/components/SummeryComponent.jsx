@@ -63,19 +63,7 @@ const SummeryComponent = ({ summery, setSummery, summeryLength,loading }) => {
     
       const inputRef = useRef();
     
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-    
-        const formData = createFormData();
-    
-        try {
-          axios.post('https://some-api.com', formData, {
-            'content-type': 'multipart/form-data',
-          });
-        } catch (error) {
-          console.error('Failed to submit files.');
-        }
-      };
+     
     const {
         transcript,
         listening,
@@ -110,12 +98,12 @@ const SummeryComponent = ({ summery, setSummery, summeryLength,loading }) => {
          
       <textarea
         onChange={handleTextareaChange}
-        value={story}
+        value={summery}
         spellCheck="true"
         placeholder="Describe your paragraph or text, and AI will help you summarize it."
       />
       <div className="bar">
-        <p>{storyLength} Words</p>
+        <p>{summeryLength} Words</p>
         <div className="fun">
           <div>
 
@@ -123,67 +111,12 @@ const SummeryComponent = ({ summery, setSummery, summeryLength,loading }) => {
           <div>
       
 
-      <div className="form-container">
-        {/* Display the files to be uploaded */}
-        <div>
-          <ul>
-            {fileNames.map((name) => (
-              <li key={name}>
-                <span>{name}</span>
-
-                <span onClick={() => removeFile(name)}>
-                <i className='bx bx-message-square-x'></i>
-                </span>
-              </li>
-            ))}
-          </ul>
-
-         
-        </div>
-
-        {/* Provide a drop zone and an alternative button inside it to upload files. */}
-        <div
-         
-          onDragEnter={handleDragDropEvent}
-          onDragOver={handleDragDropEvent}
-          onDrop={(e) => {
-            handleDragDropEvent(e);
-            setFiles(e, 'a');
-          }}
-        >
-          <p>Drag and drop files here</p>
-
-          <button onClick={() => inputRef.current.click()}> <i className='bx bxs-cloud-upload'></i>Browse File</button>
-
-          {/* Hide the crappy looking default HTML input */}
-          <input
-            ref={inputRef}
-            type="file"
-            multiple
-            style={{ display: 'none' }}
-            onChange={(e) => {
-              setFiles(e, 'a');
-              inputRef.current.value = null;
-            }}
-          />
-        </div>
-      </div>
+      
 
      
     </div>
 
-            {/* <div data-tooltip="Upload File" id="upload-sm" className="upload-icon tooltip">
-              <label htmlFor="upload_txt_File_btn">
-                <img
-                  src="https://www.summarizer.org/web_assets/frontend/img/upload-sm.svg?v1.0"
-                  width="15"
-                  height="15"
-                  alt="Upload file"
-                />
-                &nbsp; Browse File
-              </label>
-            </div> */}
-
+        
 
           </div>
           <Tooltip placement="top" title="Mic">

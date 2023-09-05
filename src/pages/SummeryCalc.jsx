@@ -34,18 +34,18 @@ const SummeryCalc = () => {
         element.click();
       };
       const handleOptionChange = (option) => {
-       
+        // Option 1: Summary
         if (option === 1) {
-          
+          // Implement logic for handling summary option
           console.log('Option 1: Summary selected');
-          
+          // Perform the necessary actions for this option
         }
       
-       
+        // Option 2: Bullets
         if (option === 2) {
-         
+          // Implement logic for handling bullets option
           console.log('Option 2: Bullets selected');
-          
+          // Perform the necessary actions for this option
         }
       };
       
@@ -185,6 +185,7 @@ console.log(summery)
         className={`show-bullets `}
         data-option="2"
         onClick={() => handleOptionChange(2)}
+
       >
         Bullets
       </label>
@@ -260,17 +261,7 @@ console.log(summery)
      
     </div>
 
-            {/* <div data-tooltip="Upload File" id="upload-sm" className="upload-icon tooltip">
-              <label htmlFor="upload_txt_File_btn">
-                <img
-                  src="https://www.summarizer.org/web_assets/frontend/img/upload-sm.svg?v1.0"
-                  width="15"
-                  height="15"
-                  alt="Upload file"
-                />
-                &nbsp; Browse File
-              </label>
-            </div> */}
+            
           </div>
           <Tooltip placement="top" title="Mic">
             {!listening ? (
