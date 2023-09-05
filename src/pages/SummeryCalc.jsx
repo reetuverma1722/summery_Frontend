@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useRef } from 'react'
 import axios from "axios";
 import { Tooltip } from "antd"
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
@@ -8,6 +8,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { toast } from 'react-toastify';
 import TranslationComponent from '../components/TranslationComponent';
 
+import useFileUpload from 'react-use-file-upload';
 const SummeryCalc = () => {
     const [story, setStory] = useState();
     const [storyLength, setStoryLength] = useState(0);
@@ -17,6 +18,89 @@ const SummeryCalc = () => {
     const [summeryLength1, setSummeryLength1] = useState(0);
     const [loading,setLoading] = useState(false);
     
+    const downloadTxtFile = () => {
+        const textContent = story;
+    
+    
+        const file = new Blob([textContent], { type: 'text/plain' });
+    
+        
+        const element = document.createElement('a');
+        element.href = URL.createObjectURL(file);
+        element.download = 'downloaded-text.txt';
+    
+
+        document.body.appendChild(element); 
+        element.click();
+      };
+      const handleOptionChange = (option) => {
+       
+        if (option === 1) {
+          
+          console.log('Option 1: Summary selected');
+          
+        }
+      
+       
+        if (option === 2) {
+         
+          console.log('Option 2: Bullets selected');
+          
+        }
+      };
+      
+      const handleTextareaChange = (e) => {
+        const newText = e.target.value;
+        setStory(newText);
+        setStoryLength(newText.split(' ').filter((word) => word !== '').length);
+      };
+
+
+      const handleCopyToClipboard = () => {
+        if (story && story.length > 0) {
+          navigator.clipboard.writeText(story)
+            .then(() => {
+              toast.success('Text copied to clipboard');
+            })
+            .catch((error) => {
+              console.error('Error copying text to clipboard:', error);
+              toast.error('Error copying text to clipboard');
+            });
+        } else {
+          console.error('Input Field is empty  cannot copied');
+          toast.error('Input Field is empty  cannot copied');
+        }
+      };
+      
+      const {
+        files,
+        fileNames,
+        fileTypes,
+        totalSize,
+        totalSizeInBytes,
+        handleDragDropEvent,    
+        clearAllFiles,
+        createFormData,
+        setFiles,
+        removeFile,
+      } = useFileUpload();
+    
+      const inputRef = useRef();
+    
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        const formData = createFormData();
+    
+        try {
+          axios.post('https://some-api.com', formData, {
+            'content-type': 'multipart/form-data',
+          });
+        } catch (error) {
+          console.error('Failed to submit files.');
+        }
+      };
+
     const {
         transcript,
         listening,
@@ -83,38 +167,151 @@ console.log(summery)
             <div className="top">
                 <h4>Generative AI Summarization</h4>
             </div>
-            <div className="wrap">
-                <div className="left">
-                    <textarea onChange={(e) => setStory(e.target.value)}
-                        value={story} spellCheck="true"
-                        placeholder='Describe your paragraph or text and  AI will help you summarize it.' />
-                    <div className="bar">
-                        <p>{storyLength} Words</p>
-                        <div className='fun'>
-                            <Tooltip placement="top" title="Mic" >
-                                {!listening ?
-                                    <span onClick={SpeechRecognition.startListening}>
-                                        <i className='bx bx-microphone'></i></span> :
-                                    <span onClick={SpeechRecognition.stopListening}>
-                                        <i class='bx bx-microphone-off'></i></span>
-                                }
+            <div className="flex-col output_options_main ">
+                        <div className="mode_for_desktop">
 
-                            </Tooltip>
-                            <Tooltip placement="top" title="Clipboard" >
-                                <CopyToClipboard text={story}>
-                                    <span onClick={() => toast.success("Copied")}><i className='bx bx-clipboard'></i></span>
-                                </CopyToClipboard>
-                            </Tooltip>
-                            <Tooltip placement="top" title="Speak" >
-                                <span onClick={handleSpeak}><i className='bx bx-speaker'></i></span>
-                            </Tooltip>
-                            <Tooltip placement="top" title="Reset" >
-                                <span onClick={handleReset}><i className='bx bx-reset'></i></span>
-                            </Tooltip>
+
+                            <div className="output_options">
+      <label
+        htmlFor="summary_title"
+        className={`summary_title`}
+        data-option="1"
+        onClick={() => handleOptionChange(1)}
+      >
+        Summary
+      </label>
+      <label
+        htmlFor="show-bullets"
+        className={`show-bullets `}
+        data-option="2"
+        onClick={() => handleOptionChange(2)}
+      >
+        Bullets
+      </label>
+    </div>
+                       
+                       
                         </div>
-
                     </div>
-                </div>
+            <div className="wrap">
+
+           
+            <div className="left">
+      <textarea
+        onChange={handleTextareaChange}
+        value={story}
+        spellCheck="true" 
+        placeholder="Describe your paragraph or text, and AI will help you summarize it."
+      />
+      <div className="bar">
+        <p>{storyLength} Words</p>
+        <div className="fun">
+          <div>
+
+          <div>
+      
+
+      <div className="form-container">
+        {/* Display the files to be uploaded */}
+        <div>
+          <ul>
+            {fileNames.map((name) => (
+              <li key={name}>
+                <span>{name}</span>
+
+                <span onClick={() => removeFile(name)}>
+                <i className='bx bx-message-square-x'></i>
+                </span>
+              </li>
+            ))}
+          </ul>
+
+         
+        </div>
+
+        {/* Provide a drop zone and an alternative button inside it to upload files. */}
+        <div
+         
+          onDragEnter={handleDragDropEvent}
+          onDragOver={handleDragDropEvent}
+          onDrop={(e) => {
+            handleDragDropEvent(e);
+            setFiles(e, 'a');
+          }}
+        >
+          <p>Drag and drop files here</p>
+
+          <button onClick={() => inputRef.current.click()}> <i className='bx bxs-cloud-upload'></i>Browse File</button>
+
+          {/* Hide the crappy looking default HTML input */}
+          <input
+            ref={inputRef}
+            type="file"
+            multiple
+            style={{ display: 'none' }}
+            onChange={(e) => {
+              setFiles(e, 'a');
+              inputRef.current.value = null;
+            }}
+          />
+        </div>
+      </div>
+
+     
+    </div>
+
+            {/* <div data-tooltip="Upload File" id="upload-sm" className="upload-icon tooltip">
+              <label htmlFor="upload_txt_File_btn">
+                <img
+                  src="https://www.summarizer.org/web_assets/frontend/img/upload-sm.svg?v1.0"
+                  width="15"
+                  height="15"
+                  alt="Upload file"
+                />
+                &nbsp; Browse File
+              </label>
+            </div> */}
+          </div>
+          <Tooltip placement="top" title="Mic">
+            {!listening ? (
+              <span onClick={SpeechRecognition.startListening}>
+                <i className="bx bx-microphone"></i>
+              </span>
+            ) : (
+              <span onClick={SpeechRecognition.stopListening}>
+                <i className="bx bx-microphone-off"></i>
+              </span>
+            )}
+          </Tooltip>
+
+          
+          <Tooltip placement="top" title="Clipboard">
+            <CopyToClipboard text={story}>
+              <span onClick={handleCopyToClipboard}>
+                <i className="bx bx-clipboard"></i>
+              </span>
+            </CopyToClipboard>
+          </Tooltip>
+
+          
+          <Tooltip placement="top" title="Speak">
+            <span onClick={handleSpeak}>
+              <i className="bx bx-speaker"></i>
+            </span>
+          </Tooltip>
+          <Tooltip placement="top" title="Reset">
+            <span onClick={handleReset}>
+              <i className="bx bx-reset"></i>
+            </span>
+          </Tooltip>
+          <Tooltip placement="top" title="Download">
+            <span onClick={downloadTxtFile}>
+              <i className="bx bx-down-arrow-alt"></i>
+            </span>
+          </Tooltip>
+        </div>
+      </div>
+    </div>
                 <div className="right">
                     <SummeryComponent
                         summery={summery}
@@ -131,130 +328,12 @@ console.log(summery)
             <br></br>
             <br></br>
 
-            <center><p style={{padding:"0.5rem 0"}}>Developed by Summerizer Team</p></center>
+            <center><p style={{padding:"0.5rem 0"}}>Developed by Summarizer Team</p></center>
          
-            {/* <div className='select'>
-                  <select  className='custom-select' style={{height:"24px",width:"100%",maxWidth:"200px"}}>
-<option value="af">Afrikaans</option>
-<option value="sq">Albanian</option>
-<option value="am">Amharic</option>
-<option value="ar">Arabic</option>
-<option value="hy">Armenian</option>
-<option value="az">Azerbaijani</option>
-<option value="eu">Basque</option>
-<option value="be">Belarusian</option>
-<option value="bn">Bengali</option>
-<option value="bs">Bosnian</option>
-<option value="bg">Bulgarian</option>
-<option value="ca">Catalan</option>
-<option value="ceb">Cebuano</option>
-<option value="ny">Chichewa</option>
-<option value="zh-CN">Chinese simp.</option>
-<option value="zh-TW">Chinese trad.</option>
-<option value="co">Corsican</option>
-<option value="hr">Croatian</option>
-<option value="cs">Czech</option>
-<option value="da">Danish</option>
-<option value="nl">Dutch</option>
-<option value="en" selected="selected">English</option>
-<option value="eo">Esperanto</option>
-<option value="et">Estonian</option>
-<option value="tl">Filipino</option>
-<option value="fi">Finnish</option>
-<option value="fr">French</option>
-<option value="fy">Frisian</option>
-<option value="gl">Galician</option>
-<option value="ka">Georgian</option>
-<option value="de">German</option>
-<option value="el">Greek</option>
-<option value="gu">Gujarati</option>
-<option value="ht">Haitian Creole</option>
-<option value="ha">Hausa</option>
-<option value="haw">Hawaiian</option>
-<option value="iw">Hebrew</option>
-<option value="hi">Hindi</option>
-<option value="hmn">Hmong</option>
-<option value="hu">Hungarian</option>
-<option value="is">Icelandic</option>
-<option value="ig">Igbo</option>
-<option value="id">Indonesian</option>
-<option value="ga">Irish</option>
-<option value="it">Italian</option>
-<option value="ja">Japanese</option>
-<option value="jw">Javanese</option>
-<option value="kn">Kannada</option>
-<option value="kk">Kazakh</option>
-<option value="km">Khmer</option>
-<option value="ko">Korean</option>
-<option value="ku">Kurdish (Kurmanji)</option>
-<option value="ky">Kyrgyz</option>
-<option value="lo">Lao</option>
-<option value="la">Latin</option>
-<option value="lv">Latvian</option>
-<option value="lt">Lithuanian</option>
-<option value="lb">Luxembourgish</option>
-<option value="mk">Macedonian</option>
-<option value="mg">Malagasy</option>
-<option value="ms">Malay</option>
-<option value="ml">Malayalam</option>
-<option value="mt">Maltese</option>
-<option value="mi">Maori</option>
-<option value="mr">Marathi</option>
-<option value="mn">Mongolian</option>
-<option value="my">Myanmar (Burmese)</option>
-<option value="ne">Nepali</option>
-<option value="no">Norwegian</option>
-<option value="ps">Pashto</option>
-<option value="fa">Persian</option>
-<option value="pl">Polish</option>
-<option value="pt">Portuguese</option>
-<option value="pa">Punjabi</option>
-<option value="ro">Romanian</option>
-<option value="ru">Russian</option>
-<option value="sm">Samoan</option>
-<option value="gd">Scots Gaelic</option>
-<option value="sr">Serbian</option>
-<option value="st">Sesotho</option>
-<option value="sn">Shona</option>
-<option value="sd">Sindhi</option>
-<option value="si">Sinhala</option>
-<option value="sk">Slovak</option>
-<option value="sl">Slovenian</option>
-<option value="so">Somali</option>
-<option value="es">Spanish</option>
-<option value="su">Sundanese</option>
-<option value="sw">Swahili</option>
-<option value="sv">Swedish</option>
-<option value="tg">Tajik</option>
-<option value="ta">Tamil</option>
-<option value="te">Telugu</option>
-<option value="th">Thai</option>
-<option value="tr">Turkish</option>
-<option value="uk">Ukrainian</option>
-<option value="ur">Urdu</option>
-<option value="uz">Uzbek</option>
-<option value="vi">Vietnamese</option>
-<option value="cy">Welsh</option>
-<option value="xh">Xhosa</option>
-<option value="yi">Yiddish</option>
-<option value="yo">Yoruba</option>
-<option value="zu">Zulu</option>
-</select>
-                  </div>
-                  <button type="submit" value="Build Now" className="builder-btn" id="appDesBuild" disabled="disabled">Translate</button>
-
-
-
-
-               <div className="translate">
-                   
-<TranslationComponent summery={summery1}
-                        summeryLength={summeryLength1}
-                        setSummery={setSummery1}/>
-                </div>   */}
+           
 
         </section>
     )
 }
 
-export default SummeryCalc
+export default SummeryCalc;
