@@ -119,17 +119,13 @@
         color: #000;
    
         cursor: pointer;
-    
-
-        .summary_title:hover{
-          color: #8d0606;
-        }
-
-        
     }
-
   }
 
+}
+.active{
+  background-color: #1270E5 !important;
+  color: #ffffff !important;
 }
   .wrap {
     width: 100%;
@@ -364,6 +360,10 @@
             color: #949393;
           }
         }
+.s-btn:disabled{
+  border-radius: 50%;
+
+}
       }
     }
     textarea::-webkit-scrollbar {
