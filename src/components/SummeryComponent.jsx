@@ -48,19 +48,24 @@ const SummeryComponent = ({ summery, setSummery, summeryLength,loading,bullet,ac
 
 
  return (<>
-         {
-          active ?<textarea
+ 
+
+ {
+          active ?
+          
+          <textarea
         onChange={(e)=>setSummery(e.target.value)}
         value={summery}
         spellCheck="true"
         placeholder="Summarize Text Here..."
       />:<div className='textbox'>
        {bullet?.map((d,i)=>(
-         <li key={i}>{d}</li>
+         <li  className="bullets-items" key={i}>{d}</li>
         ))
           }
           </div>
          }
+
    
       <div className="bar">
         <p>{summeryLength} Words</p>
