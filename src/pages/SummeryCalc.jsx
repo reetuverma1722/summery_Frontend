@@ -3,12 +3,13 @@ import axios from "axios";
 import { Tooltip } from "antd"
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import SummeryComponent from '../components/SummeryComponent';
-
+import logo from "../assets/logo.jpg"
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { toast } from 'react-toastify';
 import TranslationComponent from '../components/TranslationComponent';
 
 import useFileUpload from 'react-use-file-upload';
+import Paragraph from 'antd/es/skeleton/Paragraph';
 const SummeryCalc = () => {
     const [story, setStory] = useState();
     const [storyLength, setStoryLength] = useState(0);
@@ -17,38 +18,11 @@ const SummeryCalc = () => {
     const [summery1, setSummery1] = useState();
     const [summeryLength1, setSummeryLength1] = useState(0);
     const [loading,setLoading] = useState(false);
-    
-    const downloadTxtFile = () => {
-        const textContent = story;
-    
-    
-        const file = new Blob([textContent], { type: 'text/plain' });
-    
-        
-        const element = document.createElement('a');
-        element.href = URL.createObjectURL(file);
-        element.download = 'downloaded-text.txt';
-    
+    const [active,setActive] = useState(false);
+    const [bullet,setBullet] = useState([])
+   
+   
 
-        document.body.appendChild(element); 
-        element.click();
-      };
-      const handleOptionChange = (option) => {
-       
-        if (option === 1) {
-          
-          console.log('Option 1: Summary selected');
-          
-        }
-      
-       
-        if (option === 2) {
-         
-          console.log('Option 2: Bullets selected');
-          
-        }
-      };
-      
       const handleTextareaChange = (e) => {
         const newText = e.target.value;
         setStory(newText);
@@ -56,51 +30,28 @@ const SummeryCalc = () => {
       };
 
 
-      const handleCopyToClipboard = () => {
-        if (story && story.length > 0) {
-          navigator.clipboard.writeText(story)
-            .then(() => {
-              toast.success('Text copied to clipboard');
-            })
-            .catch((error) => {
-              console.error('Error copying text to clipboard:', error);
-              toast.error('Error copying text to clipboard');
-            });
-        } else {
-          console.error('Input Field is empty  cannot copied');
-          toast.error('Input Field is empty  cannot copied');
-        }
-      };
-      
+const handleParagraph = ()=>{
+  setActive(false)
+  setSummery(summery);
+}
+
+const handleBullet = ()=>{
+  setActive(true)
+  const arrayOfStrings = summery.split('. ');
+   setBullet(arrayOfStrings);
+}
+
+
+
+
       const {
-        files,
-        fileNames,
-        fileTypes,
-        totalSize,
-        totalSizeInBytes,
-        handleDragDropEvent,    
-        clearAllFiles,
-        createFormData,
+       fileNames,
+       handleDragDropEvent,    
         setFiles,
         removeFile,
       } = useFileUpload();
     
       const inputRef = useRef();
-    
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-    
-        const formData = createFormData();
-    
-        try {
-          axios.post('https://some-api.com', formData, {
-            'content-type': 'multipart/form-data',
-          });
-        } catch (error) {
-          console.error('Failed to submit files.');
-        }
-      };
-
     const {
         transcript,
         listening,
@@ -112,8 +63,7 @@ const SummeryCalc = () => {
         return <span>Browser doesn't support speech recognition.</span>;
     }
 
-
-    const handleClick = async () => {
+const handleClick = async () => {
         try {
             setLoading(true)
             const result = await axios.post("https://flask-app2-rg15.onrender.com/send_data",{story})
@@ -162,7 +112,7 @@ console.log(summery)
     return (
         <section className='summery'>
         <div className="navbar-logo">
-                   <img src="https://as2.ftcdn.net/v2/jpg/01/67/05/53/1000_F_167055392_O2ezl6LRHajlo3zcgSvXOoJ8BO80UVVi.jpg" alt="logo" />
+                   <img src={logo} alt="logo" />
                 </div>
             <div className="top">
                 <h4>Generative AI Summarization</h4>
@@ -171,31 +121,28 @@ console.log(summery)
                         <div className="mode_for_desktop">
 
 
-                            <div className="output_options">
+<div className="output_options">
       <label
         htmlFor="summary_title"
-        className={`summary_title`}
+        className={!active ? "summary_title active":"summary_title"}
         data-option="1"
-        onClick={() => handleOptionChange(1)}
+        onClick={handleParagraph}
       >
         Summary
       </label>
       <label
         htmlFor="show-bullets"
-        className={`show-bullets `}
+        className={active ? "summary_title active":"summary_title"}
         data-option="2"
-        onClick={() => handleOptionChange(2)}
+        onClick={handleBullet}
+
       >
         Bullets
       </label>
     </div>
-                       
-                       
-                        </div>
-                    </div>
+    </div>
+  </div>
             <div className="wrap">
-
-           
             <div className="left">
       <textarea
         onChange={handleTextareaChange}
@@ -207,44 +154,25 @@ console.log(summery)
         <p>{storyLength} Words</p>
         <div className="fun">
           <div>
-
           <div>
-      
-
       <div className="form-container">
-        {/* Display the files to be uploaded */}
-        <div>
+       <div>
           <ul>
             {fileNames.map((name) => (
               <li key={name}>
                 <span>{name}</span>
-
-                <span onClick={() => removeFile(name)}>
+                 <span onClick={() => removeFile(name)}>
                 <i className='bx bx-message-square-x'></i>
                 </span>
               </li>
             ))}
-          </ul>
-
-         
+          </ul> 
         </div>
 
-        {/* Provide a drop zone and an alternative button inside it to upload files. */}
-        <div
-         
-          onDragEnter={handleDragDropEvent}
-          onDragOver={handleDragDropEvent}
-          onDrop={(e) => {
-            handleDragDropEvent(e);
-            setFiles(e, 'a');
-          }}
-        >
-          <p>Drag and drop files here</p>
+     
 
-          <button onClick={() => inputRef.current.click()}> <i className='bx bxs-cloud-upload'></i>Browse File</button>
-
-          {/* Hide the crappy looking default HTML input */}
-          <input
+          <span onClick={() => inputRef.current.click()}> <i className='bx bxs-cloud-upload'></i></span>
+<input 
             ref={inputRef}
             type="file"
             multiple
@@ -254,24 +182,10 @@ console.log(summery)
               inputRef.current.value = null;
             }}
           />
-        </div>
+        
       </div>
-
-     
-    </div>
-
-            {/* <div data-tooltip="Upload File" id="upload-sm" className="upload-icon tooltip">
-              <label htmlFor="upload_txt_File_btn">
-                <img
-                  src="https://www.summarizer.org/web_assets/frontend/img/upload-sm.svg?v1.0"
-                  width="15"
-                  height="15"
-                  alt="Upload file"
-                />
-                &nbsp; Browse File
-              </label>
-            </div> */}
-          </div>
+</div>
+</div>
           <Tooltip placement="top" title="Mic">
             {!listening ? (
               <span onClick={SpeechRecognition.startListening}>
@@ -286,8 +200,8 @@ console.log(summery)
 
           
           <Tooltip placement="top" title="Clipboard">
-            <CopyToClipboard text={story}>
-              <span onClick={handleCopyToClipboard}>
+          <CopyToClipboard text={story}>
+              <span className='s-btn'  onClick={()=>{story ===""? "" : toast("Story Copied")}}>
                 <i className="bx bx-clipboard"></i>
               </span>
             </CopyToClipboard>
@@ -304,11 +218,7 @@ console.log(summery)
               <i className="bx bx-reset"></i>
             </span>
           </Tooltip>
-          <Tooltip placement="top" title="Download">
-            <span onClick={downloadTxtFile}>
-              <i className="bx bx-down-arrow-alt"></i>
-            </span>
-          </Tooltip>
+         
         </div>
       </div>
     </div>
@@ -318,10 +228,13 @@ console.log(summery)
                         summeryLength={summeryLength}
                         setSummery={setSummery}
                         loading={loading}
+                        setSummery1={setSummery1}
+                        summery1={summery1}
+                        bullet={bullet}
+                        active={!active}
 
                     />
-
-                </div>
+</div>
             </div>
             <button type="submit" value="Build Now" className="builder-btn" id="appDesBuild"  
             onClick={handleClick}>{loading ? "Loading....":"Summarize"}</button>
