@@ -38,8 +38,9 @@ const SummeryComponent = ({ summery, setSummery, summeryLength,loading,bullet,ac
     }
 
     const handleReset = () => {
-        setSummery("")
-        resetTranscript()
+      if(window.confirm("Are you sure you want reset ?"))  
+      setSummery("")
+        resetTranscript()    
     }
 
     useEffect(() => {
@@ -48,25 +49,27 @@ const SummeryComponent = ({ summery, setSummery, summeryLength,loading,bullet,ac
 
 
  return (<>
- 
 
- {
-          active ?
-          
-          <textarea
-        onChange={(e)=>setSummery(e.target.value)}
-        value={summery}
-        spellCheck="true"
-        placeholder="Summarize Text Here..."
-      />:<div className='textbox'>
-       {bullet?.map((d,i)=>(
-         <li  className="bullets-items" key={i}>{d}</li>
-        ))
-          }
-          </div>
-         }
+{active ? (
+  <textarea
+    onChange={(e) => setSummery(e.target.value)}
+    value={summery}
+    spellCheck="true"
+    placeholder="Summarize Text Here..."
+  />
+) : (
+  <div className='textbox'>
+    {summery
+      .split('\n')
+      .filter((line) => line.trim() !== '') 
+      .map((line, i) => (
+        <li className="bullets-items" key={i}>{line}</li>
+      ))}
+  </div>
+)}
 
-   
+
+
       <div className="bar">
         <p>{summeryLength} Words</p>
         <div className="fun">
@@ -94,7 +97,7 @@ const SummeryComponent = ({ summery, setSummery, summeryLength,loading,bullet,ac
             </span>
           </Tooltip>
           <Tooltip placement="top" title="Reset">
-            <span onClick={handleReset}>
+            <span onClick={handleReset} >
               <i className="bx bx-reset"></i>
             </span>
           </Tooltip>
@@ -106,8 +109,6 @@ const SummeryComponent = ({ summery, setSummery, summeryLength,loading,bullet,ac
         </div>
         </div>
 
-    
-    
     </>
     )
 }

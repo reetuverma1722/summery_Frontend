@@ -39,19 +39,15 @@ const handleBullet = ()=>{
   setActive(true)
   const arrayOfStrings = summery.split('. ');
    setBullet(arrayOfStrings);
+   
 }
-
-
-
-
-      const {
+const {
        fileNames,
-       handleDragDropEvent,    
-        setFiles,
+         setFiles,
         removeFile,
       } = useFileUpload();
     
-      const inputRef = useRef();
+    const inputRef = useRef();
     const {
         transcript,
         listening,
@@ -157,6 +153,7 @@ console.log(summery)
           <div>
       <div className="form-container">
        <div>
+       
           <ul>
             {fileNames.map((name) => (
               <li key={name}>
@@ -168,13 +165,11 @@ console.log(summery)
             ))}
           </ul> 
         </div>
-
-     
-
-          <span onClick={() => inputRef.current.click()}> <i className='bx bxs-cloud-upload'></i></span>
+        <Tooltip placement="top" title="Upload File"><span   placement='top' onClick={() => inputRef.current.click()}> <i  className='bx bxs-cloud-upload'></i></span></Tooltip>
 <input 
             ref={inputRef}
             type="file"
+            title='Upload File'
             multiple
             style={{ display: 'none' }}
             onChange={(e) => {
@@ -197,9 +192,7 @@ console.log(summery)
               </span>
             )}
           </Tooltip>
-
-          
-          <Tooltip placement="top" title="Clipboard">
+         <Tooltip placement="top" title="Clipboard">
           <CopyToClipboard text={story}>
               <span className='s-btn'  onClick={()=>{story ===""? "" : toast("Story Copied")}}>
                 <i className="bx bx-clipboard"></i>
@@ -236,16 +229,12 @@ console.log(summery)
                     />
 </div>
             </div>
-            <button type="submit" value="Build Now" className="builder-btn" id="appDesBuild"  
+            <button type="submit" value="Build Now" className="builder-btn" id="appDesBuild"  disabled={loading}
             onClick={handleClick}>{loading ? "Loading....":"Summarize"}</button>
             <br></br>
             <br></br>
-
-            <center><p style={{padding:"0.5rem 0"}}>Developed by Summarizer Team</p></center>
-         
-           
-
-        </section>
+<center><p style={{padding:"0.5rem 0"}}>Developed by Summarizer Team</p></center>
+         </section>
     )
 }
 

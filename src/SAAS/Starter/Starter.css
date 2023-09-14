@@ -17,7 +17,7 @@
   font-size: 5.5rem;
   font-weight: 900;
   letter-spacing: 0.2rem;
-  color: #ffffff;
+  color: #020202;
 }
 
 @media screen and (max-width: 800px) {
@@ -44,7 +44,7 @@
   margin-top: 20px;
   font-family: "Mulish", sans-serif;
   word-spacing: 7px;
-  color: rgb(255, 255, 255);
+  color: rgb(3, 3, 3);
   font-size: 20px;
   text-align: center;
   line-height: 1.5;
@@ -65,7 +65,7 @@
 .heading-contents h2 {
   margin-top: 10px;
   text-align: center;
-  color: #ffffff;
+  color: #000000;
   font-family: "Lora", serif;
 }
 
@@ -79,8 +79,8 @@
 
 .home-container .intro-home-buttons .get-started {
   padding: 10px 20px;
-  background-color: #222;
-  color: white;
+  background-color: #f0e6e6;
+  color: rgb(0, 0, 0);
   font-size: 20px;
   cursor: pointer;
   border-radius: 10px;
@@ -91,7 +91,7 @@
 
 .home-container .intro-home-buttons .Learn-Generative-AI {
   padding: 10px 20px;
-  border: 1.2px solid gray;
+  border: 1.2px solid rgb(202, 197, 197);
   font-size: 20px;
   border-radius: 10px;
   background-color: transparent;
