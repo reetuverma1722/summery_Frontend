@@ -37,6 +37,7 @@ const TranslationComponent = ({ summery1, setSummery, summeryLength1 }) => {
 
     
     return (<>
+         
         <textarea spellCheck="true"
             onChange={(e) => setSummery(e.target.value)}
             value={summery1} placeholder='Translated Summary....' />
