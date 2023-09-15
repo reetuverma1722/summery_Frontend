@@ -60,7 +60,7 @@ const SummeryComponent = ({ summery, setSummery, summeryLength,loading,bullet,ac
 ) : (
   <div className='textbox'>
     {summery
-      .split('\n')
+      .split('\.')
       .filter((line) => line.trim() !== '') 
       .map((line, i) => (
         <li className="bullets-items" key={i}>{line}</li>
