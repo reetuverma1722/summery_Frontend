@@ -82,11 +82,17 @@ const SummeryCalc = () => {
       speechSynthesis.speak(utterance);
     }
   }
+  // const handleReset = () => {
+  //   setStory("")
+  //   resetTranscript()
+  // }
+
   const handleReset = () => {
-    setStory("")
+    if (summery === "") return
+    if (window.confirm("Are you sure you want reset ?"))
+      setSummery("")
     resetTranscript()
   }
-
 
   useEffect(() => {
     setStoryLength(story?.length)
@@ -165,7 +171,7 @@ const SummeryCalc = () => {
                         ))}
                       </ul>
                     </div>
-                    <Tooltip placement="top" title="Upload File"><span placement='top' onClick={() => inputRef.current.click()}> <i className='bx bxs-cloud-upload'></i></span></Tooltip>
+                    {/* <Tooltip placement="top" title="Upload File"><span placement='top' onClick={() => inputRef.current.click()}> <i className='bx bxs-cloud-upload'></i></span></Tooltip>
                     <input
                       ref={inputRef}
                       type="file"
@@ -176,7 +182,7 @@ const SummeryCalc = () => {
                         setFiles(e, 'a');
                         inputRef.current.value = null;
                       }}
-                    />
+                    /> */}
 
                   </div>
                 </div>

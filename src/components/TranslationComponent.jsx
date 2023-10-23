@@ -4,7 +4,7 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { toast } from 'react-toastify';
 
-const TranslationComponent = ({ summery1, setSummery, summeryLength1 }) => {
+const TranslationComponent = ({ summery1, summery,setSummery, summeryLength1 }) => {
 
     const {
         transcript,
@@ -25,11 +25,17 @@ const TranslationComponent = ({ summery1, setSummery, summeryLength1 }) => {
         }
     }
 
+    // const handleReset = () => {
+    //     setSummery("")
+    //     resetTranscript()
+    // }
     const handleReset = () => {
-        setSummery("")
+        if (summery === "") return
+        if (window.confirm("Are you sure you want reset ?"))
+          setSummery("")
         resetTranscript()
-    }
-
+      }
+    
     useEffect(() => {
         setSummery(transcript)
     }, [transcript])
